@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy_serializer import SerializerMixin
 
 metadata = MetaData(naming_convention={
@@ -34,7 +35,7 @@ class BakedGood(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    bakery_id = db.Column(db.Integer, db.ForeignKey('bakeries.id'))
+    bakery_id = db.Column(db.Integer, ForeignKey('bakeries.id'))
 
     def __repr__(self):
         return f'<Baked Good {self.name}, ${self.price}>'
